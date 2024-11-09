@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import "@/src/styles/globals.scss";
 import SchemaOrg from "./SchemaOrg";
-
+import AnimationWrapper from "../components/shared/AnimationWrapper";
+import Header from "../components/shared/header/Header";
+import Footer from "../components/shared/footer/Footer";
 export const metadata: Metadata = {
   title: "Ashim Rudra Paul | Software Engineer",
   description: "Experienced Software Engineer with 2+ years in MERN stack, TypeScript, Next.js, React Native, AWS, Docker, and more. Sylhet Polytechnic Institute graduate. Let's bring your ideas to life with scalable, efficient web solutions!",
@@ -81,8 +83,12 @@ export default function RootLayout({
       <head>
         <SchemaOrg />
       </head>
-      <body className={`antialiased`}>
-        {children}
+      <body>
+        <AnimationWrapper>
+          <main className="flex-1">{children}</main>
+          <Header />
+          <Footer />
+        </AnimationWrapper>
       </body>
     </html>
   );
