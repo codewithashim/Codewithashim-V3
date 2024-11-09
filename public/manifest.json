@@ -1,0 +1,116 @@
+{
+    "name": "Ashim Rudra Paul - Software Engineer",
+    "short_name": "Ashim Paul",
+    "description": "Experienced Software Engineer specializing in Full Stack & LAMP stack, TypeScript, React Native, AWS, and more. Building scalable and efficient web solutions.",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#ffffff",
+    "theme_color": "#000000",
+    "orientation": "any",
+    "icons": [
+        {
+            "src": "/ashim.jpg",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "any maskable"
+        },
+        {
+            "src": "/ashim.jpg",
+            "sizes": "256x256",
+            "type": "image/png"
+        },
+        {
+            "src": "/ashim.jpg",
+            "sizes": "384x384",
+            "type": "image/png"
+        },
+        {
+            "src": "/ashim.jpg",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ],
+    "categories": [
+        "technology",
+        "software",
+        "web development",
+        "programming",
+        "mern stack",
+        "react",
+        "node.js",
+        "express",
+        "mongodb",
+        "typescript",
+        "next.js",
+        "react native",
+        "aws",
+        "docker",
+        "firebase",
+        "supabase",
+        "postgresql",
+        "mysql",
+        "javascript",
+        "html",
+        "css",
+        "git",
+        "github",
+        "competitive programming",
+        "problem solving",
+        "full stack development",
+        "software engineering"
+    ],
+    "lang": "en-US",
+    "dir": "ltr",
+    "prefer_related_applications": false,
+    "related_applications": [],
+    "scope": "/",
+    "shortcuts": [
+        {
+            "name": "View Portfolio",
+            "short_name": "Portfolio",
+            "description": "Explore Ashim's projects and achievements",
+            "url": "/portfolio",
+            "icons": [
+                {
+                    "src": "/ashim.jpg",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Contact Ashim",
+            "short_name": "Contact",
+            "description": "Get in touch for collaborations or inquiries",
+            "url": "/",
+            "icons": [
+                {
+                    "src": "/ashim.jpg",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "About Ashim",
+            "short_name": "About",
+            "description": "Learn more about Ashim's skills and experience",
+            "url": "/about",
+            "icons": [
+                {
+                    "src": "/ashim.jpg",
+                    "sizes": "192x192"
+                }
+            ]
+        },
+        {
+            "name": "Blog",
+            "description": "Read Ashim's thoughts on technology and software development",
+            "url": "/blog",
+            "icons": [
+                {
+                    "src": "/ashim.jpg",
+                    "sizes": "192x192"
+                }
+            ]
+        }
+    ]
+}
