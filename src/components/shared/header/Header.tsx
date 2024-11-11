@@ -1,41 +1,54 @@
 'use client'
 
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { Button } from "@/src/components/ui/button"
-import { Home, Phone, Github, Linkedin, Twitter, Sun, Moon } from "lucide-react"
+import { Home, Phone, Github, Linkedin, Twitter, Sun, Moon, BookOpen, Image } from "lucide-react"
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
+  const pathname = usePathname()
+
+  const isActive = (path : string) => pathname === path
+
+  const menuItems = [
+    { href: "/", label: "Home", icon: Home },
+    { href: "/blog", label: "Blog", icon: BookOpen },
+    { href: "/gallery", label: "Gallery", icon: Image },
+    { href: "/contact", label: "Contact", icon: Phone },
+  ]
+
+  const socialItems = [
+    { href: "https://github.com/codewithashim", label: "GitHub", icon: Github },
+    { href: "https://linkedin.com/in/codewithashim", label: "LinkedIn", icon: Linkedin },
+    { href: "https://twitter.com/codewithashim", label: "Twitter", icon: Twitter },
+  ]
 
   return (
     <header className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
       <nav className="h-12 px-4 bg-background/80 rounded-full border shadow-lg flex items-center gap-2 backdrop-blur-md">
-        <Button variant="ghost" size="icon" asChild className="w-9 h-9">
-          <Link href="/" aria-label="Home">
-            <Home className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button variant="ghost" size="icon" asChild className="w-9 h-9">
-          <Link href="/contact" aria-label="Contact">
-            <Phone className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button variant="ghost" size="icon" asChild className="w-9 h-9">
-          <Link href="https://github.com/codewithashim" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-            <Github className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button variant="ghost" size="icon" asChild className="w-9 h-9">
-          <Link href="https://linkedin.com" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-            <Linkedin className="h-4 w-4" />
-          </Link>
-        </Button>
-        <Button variant="ghost" size="icon" asChild className="w-9 h-9">
-          <Link href="https://twitter.com/codewithashim" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-            <Twitter className="h-4 w-4" />
-          </Link>
-        </Button>
+        {menuItems.map((item) => (
+          <Button
+            key={item.href}
+            variant={isActive(item.href) ? "default" : "ghost"}
+            size="icon"
+            asChild
+            className={`w-9 h-9 ${isActive(item.href) ? 'bg-primary text-primary-foreground' : ''}`}
+          >
+            <Link href={item.href} aria-label={item.label}>
+              <item.icon className="h-4 w-4" />
+            </Link>
+          </Button>
+        ))}
+        
+        {socialItems.map((item) => (
+          <Button key={item.href} variant="ghost" size="icon" asChild className="w-9 h-9">
+            <Link href={item.href} target="_blank" rel="noopener noreferrer" aria-label={item.label}>
+              <item.icon className="h-4 w-4" />
+            </Link>
+          </Button>
+        ))}
     
         <div className="w-px h-6 bg-border mx-1" />
         <Button

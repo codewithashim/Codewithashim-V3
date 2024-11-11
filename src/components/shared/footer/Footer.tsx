@@ -47,7 +47,7 @@ const itemVariants = {
 export default function Footer() {
   return (
     <motion.footer
-      className="relative py-8 px-4  overflow-hidden bg-gradient-to-br from-background via-background to-purple-900/20 "
+      className="relative py-8 px-4  overflow-hidden"
       animate="visible"
       variants={containerVariants}
     >
