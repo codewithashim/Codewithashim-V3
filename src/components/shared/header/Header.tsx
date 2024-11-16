@@ -4,7 +4,7 @@ import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useTheme } from "next-themes"
 import { Button } from "@/src/components/ui/button"
-import { Home, Phone, Github, Linkedin, Twitter, Sun, Moon, BookOpen, Image } from "lucide-react"
+import { Home, Phone, Github, Linkedin, Twitter, Sun, Moon, BookOpen, Briefcase } from "lucide-react"
 
 export default function Header() {
   const { theme, setTheme } = useTheme()
@@ -15,8 +15,8 @@ export default function Header() {
   const menuItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/blog", label: "Blog", icon: BookOpen },
-    { href: "/gallery", label: "Gallery", icon: Image },
-    { href: "/contact", label: "Contact", icon: Phone },
+    { href: "/projects", label: "Projects", icon: Briefcase },
+    { href: "/", label: "Contact", icon: Phone },
   ]
 
   const socialItems = [

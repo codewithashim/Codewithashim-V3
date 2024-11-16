@@ -7,6 +7,7 @@ export const experiences: Experience[] = [
         img: "https://res.cloudinary.com/codewithashim/image/upload/v1731353591/Codewithashim/Icons/atonmlrrtv5hzyghf0uv.jpg",
         role: "Software Engineer",
         company: "SJ Innovation LLC",
+        location: "New York, USA - Onsite",
         date: "Aug 2024 - Present",
         desc: "Developing high-performance backend systems and managing databases for scalable applications.",
         skills: [
@@ -29,7 +30,8 @@ export const experiences: Experience[] = [
         img: "https://res.cloudinary.com/codewithashim/image/upload/v1714155733/Codewithashim/Icons/swkwoak4fvb6xrunytat.png",
         role: "Full Stack Developer",
         company: "elPixala",
-        date: "September 2023 - Present",
+        location: "India - Remote",
+        date: "September 2023 - July 2024",
         desc: "Leading full-stack development projects and managing team dynamics to deliver high-quality products.",
         skills: [
             "Docker", "AWS", "EC2", "Nginx", "JavaScript", "TypeScript", "React Js",
@@ -48,6 +50,7 @@ export const experiences: Experience[] = [
         img: "https://res.cloudinary.com/codewithashim/image/upload/v1714156173/Codewithashim/Icons/uth9yhkssgajkj94ki9f.jpg",
         role: "Frontend Engineer",
         company: "RI Software",
+        location: "New York, USA - Remote",
         date: "July 2023 - September 2023",
         desc: "Developed responsive and interactive web applications using modern frontend technologies.",
         skills: ["ReactJS", "Redux", "NodeJs", "Material UI", "SCSS", "JavaScript"],
@@ -64,6 +67,7 @@ export const experiences: Experience[] = [
         img: "https://res.cloudinary.com/codewithashim/image/upload/v1714655729/Codewithashim/Icons/hzrcjfcdytgjotriqiad.jpg",
         role: "MERN Stack Developer",
         company: "Bright Future Soft",
+        location: "Dhaka, Bangladesh - Remote",
         date: "Jan 2023 - June 2023",
         desc: "Developed and maintained web applications using the MERN stack, focusing on scalability and efficiency.",
         skills: [
@@ -83,6 +87,7 @@ export const experiences: Experience[] = [
         img: "https://res.cloudinary.com/codewithashim/image/upload/v1714656049/Codewithashim/Icons/p5yeo4ecdbnbbgjn7fzc.jpg",
         role: "Frontend Developer",
         company: "Starting Core",
+        location: "India - Remote",
         date: "Sept 2022 - Dec 2022",
         desc: "Designed and implemented user interfaces, focusing on performance optimization and seamless user experience.",
         skills: [
