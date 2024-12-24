@@ -24,7 +24,7 @@ export default function ProjectShowcase({ projects = [] }: ProjectShowcaseProps)
   const displayedProjects = projects.slice(0, 4)
 
   return (
-    <section className="py-8 sm:py-12 md:py-16" ref={containerRef}>
+    <section className="py-8" ref={containerRef}>
       <div className="container mx-auto px-4">
         <motion.h2
           initial={{ opacity: 0, y: -20 }}

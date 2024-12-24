@@ -1,3 +1,4 @@
+'use client'
 import Blog from '@/src/features/Blog/Blog';
 import React from 'react'
 

@@ -1,5 +1,3 @@
-// src/features/Blog/Blog.tsx
-
 'use client'
 
 import { useState, useEffect } from "react"
@@ -81,7 +79,7 @@ export default function Blog() {
             initial="hidden"
             animate="visible"
             variants={containerVariants}
-            className="min-h-screen bg-gradient-to-br from-purple-50 to-white"
+            className="container mx-auto"
         >
             <div className="container px-4 py-10 mx-auto space-y-16 md:py-16 lg:py-24">
                 {/* Hero Section with Featured Post */}

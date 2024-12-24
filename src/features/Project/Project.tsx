@@ -66,7 +66,7 @@ function ProjectCard({ project, onClick }: { project: Project; onClick: () => vo
     <motion.div
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="bg-card rounded-lg overflow-hidden shadow-lg cursor-pointer"
+      className="bg-card rounded-lg overflow-hidden  cursor-pointer"
       onClick={onClick}
     >
       <div className="relative h-48">

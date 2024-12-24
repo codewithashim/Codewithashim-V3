@@ -5,6 +5,7 @@ import ExperienceSection from './@components/Experiance';
 import { experiences } from '@/src/constant/data/experienceData';
 import ProjectShowcase from './@components/Project';
 import { projectData } from '@/src/constant/data/projectData';
+import FeaturedBlog from './@components/FeaturedBlog';
 
 const Home = () => {
 
@@ -15,6 +16,7 @@ const Home = () => {
       <TechStack />
       <ExperienceSection experiences={experiences}/>
       <ProjectShowcase projects={projectData}/>
+      <FeaturedBlog />
     </section>
   )
 }
