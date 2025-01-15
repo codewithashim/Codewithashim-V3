@@ -50,14 +50,14 @@ const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
 
   if (!blocks) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="min-h-screen container my-auto bg-gradient-to-b from-gray-50 to-white">
         <BlogSkeleton />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <div className="">
       <div className="relative h-[60vh] overflow-hidden">
         <Image
           src={toNotionImageUrl(post.coverImage[0].url)}
@@ -120,27 +120,30 @@ const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
         </motion.div>
       </div>
 
-      <div className="max-w-4xl mx-auto px-4 py-12">
-        <article className="prose prose-lg max-w-none">
-          <NotionRenderer blockMap={blocks} mapImageUrl={toNotionImageUrl} />
-        </article>
+      <div className="mx-auto px-4 py-12">
+        <div className="container">
+          <article className="prose prose-lg max-w-none">
+            <NotionRenderer blockMap={blocks} mapImageUrl={toNotionImageUrl} />
+          </article>
 
-        <div className="mt-20">
-          <div className="flex justify-between items-center mb-8">
-            <h3 className="text-2xl font-bold text-gray-800">
-              Continue Reading
-            </h3>
-            <Link
-              href="/blogs"
-              className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-            >
-              View all →
-            </Link>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {morePosts.map((p) => (
-              <BlogCard key={p?.id} post={p} />
-            ))}
+          <div className="my-20">
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Continue Reading
+              </h3>
+              <Link
+                href="/blogs"
+                className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+              >
+                View all →
+              </Link>
+            </div>
+
+            <div className="grid grid-1 md:grid-cols-3 gap-8">
+              {morePosts.map((p) => (
+                <BlogCard key={p?.id} post={p} />
+              ))}
+            </div>
           </div>
         </div>
       </div>

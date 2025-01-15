@@ -18,6 +18,8 @@ interface BlogCardProps {
 }
 
 export function BlogCard({ post }: BlogCardProps) {
+  const fallbackImageUrl = "/path/to/fallback-image.jpg"; // Replace with your fallback image path
+
   return (
     <motion.div
       variants={{
@@ -28,13 +30,19 @@ export function BlogCard({ post }: BlogCardProps) {
       <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 border-purple-200">
         <CardHeader className="p-0">
           <div className="relative w-full h-72">
-            <Image
-              alt={`${post.title} cover image`}
-              src={toNotionImageUrl(post.cover_image[0]?.url)}
-              layout="fill"
-              objectFit="cover"
-              className="transition-transform hover:scale-105"
-            />
+            <Link href={`/blog/${post?.id}`} >
+              <Image
+                alt={`${post?.title} cover image`}
+                src={
+                  post?.cover_image && post.cover_image.length > 0
+                    ? toNotionImageUrl(post.cover_image[0].url)
+                    : fallbackImageUrl
+                }
+                layout="fill"
+                objectFit="cover"
+                className="object-cover transition-transform hover:scale-105"
+              />
+            </Link>
           </div>
         </CardHeader>
         <CardContent className="p-6">
@@ -58,7 +66,6 @@ export function BlogCard({ post }: BlogCardProps) {
           <Link
             className="inline-flex items-center text-sm font-medium text-purple-600 hover:text-purple-700 hover:underline"
             href={`/blog/${post?.id}`}
-            target="_blank"
             rel="noopener noreferrer"
           >
             Read More

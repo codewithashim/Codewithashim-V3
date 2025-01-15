@@ -1,10 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import axios from "axios";
 import { BlockMapType } from "react-notion";
+import { envConfig } from "../config/envConfig";
 
 // Base URLs for APIs
-const NOTION_API_BASE = "https://notion-api.splitbee.io/v1";
-const SPLITBEE_API_BASE = "https://api.splitbee.io/public";
+const NOTION_API_BASE = envConfig.NOTION_API_BASE_URL;
+const SPLITBEE_API_BASE = envConfig.SPLITBEE_API_BASE_URL;
 
 // Axios instance for Notion API
 const notionAxios = axios.create({

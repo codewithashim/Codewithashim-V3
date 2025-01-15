@@ -1,8 +1,6 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { getBlogTable as fetchBlogTable } from "@/src/hooks/useBlog";
-import { config } from "@/src/utils/helper";
 import { motion } from "framer-motion";
 import { BlogCard } from "./@components/BlogCard";
 import SearchBar from "./@components/SearchBar";
@@ -17,6 +15,7 @@ import {
 import { BlogPostType } from "@/src/types/blogType";
 import BlogHero from "./@components/BlogHero";
 import BlogSkeleton from "./@components/BlogSkeleton";
+import { envConfig } from "@/src/config/envConfig";
 
 const Blog = () => {
   const [blogsData, setBlogsData] = useState<BlogPostType[]>([]);
@@ -30,7 +29,7 @@ const Blog = () => {
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        const blogs = await fetchBlogTable(config?.notionBlogTableId);
+        const blogs = await fetchBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
         setBlogsData(blogs);
         setFilteredBlogs(blogs);
       } catch (err) {

@@ -1,11 +1,10 @@
 "use client";
-
 import { useEffect, useState } from "react";
 import BlogDetails from "@/src/features/Blog/BlogDetails/BlogDetails";
 import { getBlogTable } from "@/src/hooks/useBlog";
 import { BlogPostType } from "@/src/types/blogType";
-import { config } from "@/src/utils/helper";
 import BlogSkeleton from "@/src/features/Blog/@components/BlogSkeleton";
+import { envConfig } from "@/src/config/envConfig";
 
 export default function BlogPage({ params }: { params: { blogid: string } }) {
   const blogId = params?.blogid;
@@ -16,7 +15,7 @@ export default function BlogPage({ params }: { params: { blogid: string } }) {
   useEffect(() => {
     const fetchBlogData = async () => {
       try {
-        const table = await getBlogTable(config.notionBlogTableId);
+        const table = await getBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
         const publishedBlog = table.filter((p: BlogPostType) => p.publish_date);
 
         const currentPost = publishedBlog.find(
@@ -28,10 +27,9 @@ export default function BlogPage({ params }: { params: { blogid: string } }) {
           const postIndex = publishedBlog.findIndex(
             (p: BlogPostType) => p.id === blogId
           );
-          const morePostsData = [...publishedBlog, ...publishedBlog].slice(
-            postIndex + 1,
-            postIndex + 3
-          );
+          const morePostsData = publishedBlog
+            .slice(0, postIndex)
+            .concat(publishedBlog.slice(postIndex + 1, postIndex + 4));
           setMorePosts(morePostsData);
         }
       } catch (error) {
@@ -55,7 +53,7 @@ export default function BlogPage({ params }: { params: { blogid: string } }) {
   }
 
   return (
-    <div className="bg-gray-50 min-h-screen">
+    <div className="min-h-screen">
       <BlogDetails
         blogId={blogId}
         post={{
