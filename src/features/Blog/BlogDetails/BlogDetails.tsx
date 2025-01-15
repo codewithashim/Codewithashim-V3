@@ -1,171 +1,154 @@
-'use client'
+/* eslint-disable @typescript-eslint/no-explicit-any */
+"use client";
 
-import Link from "next/link"
-import { motion } from "framer-motion"
-import { Avatar, AvatarFallback, AvatarImage } from "@/src/components/ui/avatar"
-import { Button } from "@/src/components/ui/button"
-import { Card, CardContent } from "@/src/components/ui/card"
-import { ArrowLeft, Calendar, Clock, Facebook, Linkedin, Twitter } from "lucide-react"
+import React, { useEffect, useState } from "react";
+import { NotionRenderer, BlockMapType } from "react-notion";
+import Link from "next/link";
+import Image from "next/image";
+import { getPageBlocks, getPageViews } from "@/src/hooks/useBlog";
+import { toNotionImageUrl } from "@/src/utils/notion";
+import { dateFormatter } from "@/src/utils/helper";
+import { BlogCard } from "../@components/BlogCard";
+import { motion, useScroll, useTransform } from "framer-motion";
+import { Eye, Calendar, Tag, ChevronDown } from "lucide-react";
+import BlogSkeleton from "../@components/BlogSkeleton";
 
-export default function BlogPostDetail() {
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1
+interface BlogDetailsProps {
+  blogId: string;
+  post: {
+    title: string;
+    date: string;
+    slug: string;
+    coverImage: any;
+    tags: string[];
+  };
+  morePosts: any[];
+}
+
+const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
+  const [blocks, setBlocks] = useState<BlockMapType | null>(null);
+  const [postViewCount, setPostViewCount] = useState<number | null>(null);
+  const { scrollY } = useScroll();
+  const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+  const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const fetchedBlocks = await getPageBlocks(blogId);
+        setBlocks(fetchedBlocks);
+
+        const views = await getPageViews(`/${post.slug}`);
+        setPostViewCount(views);
+      } catch (error) {
+        console.error("Error fetching blog details:", error);
       }
-    }
-  }
+    };
 
-  const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
-    visible: {
-      y: 0,
-      opacity: 1
-    }
+    fetchData();
+  }, [blogId, post.slug]);
+
+  if (!blocks) {
+    return (
+      <div className="min-h-screen container my-auto bg-gradient-to-b from-gray-50 to-white">
+        <BlogSkeleton />
+      </div>
+    );
   }
 
   return (
-    <motion.div
-      initial="hidden"
-      animate="visible"
-      variants={containerVariants}
-      className="min-h-screen bg-gradient-to-b from-background to-secondary/20"
-    >
-      <div className="container px-4 py-10 mx-auto space-y-12 md:py-16 lg:py-24">
-        <motion.div variants={itemVariants}>
-          <Link href="/blog" className="inline-flex items-center text-sm font-medium text-primary hover:underline mb-4">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Back to Blog
-          </Link>
-        </motion.div>
-
-        <motion.article variants={itemVariants} className="max-w-4xl mx-auto">
-          <header className="mb-8">
-            <motion.h1 variants={itemVariants} className="text-4xl font-extrabold tracking-tight lg:text-6xl mb-4">
-              The Future of AI in Web Development
-            </motion.h1>
-            <motion.div variants={itemVariants} className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
-              <time className="flex items-center gap-1" dateTime="2024-02-20">
-                <Calendar className="w-4 h-4" />
-                February 20, 2024
-              </time>
-              <span className="flex items-center gap-1">
-                <Clock className="w-4 h-4" />
-                10 min read
+    <div className="">
+      <div className="relative h-[60vh] overflow-hidden">
+        <Image
+          src={toNotionImageUrl(post.coverImage[0].url)}
+          alt={post.title}
+          layout="fill"
+          objectFit="cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/70 to-black/30" />
+        <motion.div
+          className="absolute inset-0 flex flex-col items-center justify-center text-white p-6"
+          style={{ opacity, scale }}
+        >
+          <motion.h1
+            className="text-4xl md:text-6xl font-bold mb-4 text-center"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.2 }}
+          >
+            {post.title}
+          </motion.h1>
+          <motion.div
+            className="flex flex-wrap justify-center items-center gap-4 text-sm mb-8"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.4 }}
+          >
+            <span className="flex items-center bg-white/20 rounded-full px-3 py-1">
+              <Calendar className="w-4 h-4 mr-2" />
+              {dateFormatter.format(new Date(post.date))}
+            </span>
+            <span className="flex items-center bg-white/20 rounded-full px-3 py-1">
+              <Eye className="w-4 h-4 mr-2" />
+              {postViewCount || "..."} Views
+            </span>
+          </motion.div>
+          <motion.div
+            className="flex flex-wrap justify-center gap-2"
+            initial={{ y: 20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.6 }}
+          >
+            {post.tags.map((tag, index) => (
+              <span
+                key={index}
+                className="bg-white/20 text-white text-xs font-medium px-2.5 py-0.5 rounded-full flex items-center"
+              >
+                <Tag className="w-3 h-3 mr-1" />
+                {tag}
               </span>
-            </motion.div>
-            <motion.div variants={itemVariants} className="flex items-center gap-4">
-              <Avatar>
-                <AvatarImage src="/placeholder-avatar.jpg" alt="Author" />
-                <AvatarFallback>JD</AvatarFallback>
-              </Avatar>
-              <div>
-                <p className="font-semibold">John Doe</p>
-                <p className="text-sm text-muted-foreground">AI Researcher & Web Developer</p>
-              </div>
-            </motion.div>
-          </header>
-
-          <motion.img
-            variants={itemVariants}
-            src="/placeholder.svg?height=400&width=800"
-            alt="Blog post hero image"
-            className="w-full h-auto rounded-lg mb-8"
-          />
-
-          <motion.div variants={itemVariants} className="prose prose-lg dark:prose-invert max-w-none">
-            <p>
-              Artificial Intelligence (AI) is rapidly transforming various industries, and web development is no exception.
-              As we move towards more intelligent and adaptive web applications, AI is playing a crucial role in shaping
-              the future of how we build and interact with websites.
-            </p>
-            <h2>The Current State of AI in Web Development</h2>
-            <p>
-              Today, AI is already being used in various aspects of web development, from design to functionality.
-              Some current applications include:
-            </p>
-            <ul>
-              <li>Chatbots and virtual assistants for improved user engagement</li>
-              <li>Personalized content recommendations based on user behavior</li>
-              <li>Automated testing and bug detection in web applications</li>
-              <li>AI-powered design tools for creating user interfaces</li>
-            </ul>
-            <h2>Future Trends and Possibilities</h2>
-            <p>
-              As AI continues to evolve, we can expect even more innovative applications in web development:
-            </p>
-            <ol>
-              <li>
-                <strong>Intelligent Code Generation:</strong> AI could assist developers by generating code snippets or
-                even entire components based on high-level descriptions or requirements.
-              </li>
-              <li>
-                <strong>Advanced User Experience Personalization:</strong> Websites could adapt in real-time to individual
-                user preferences, creating truly personalized experiences.
-              </li>
-              <li>
-                <strong>Predictive Maintenance:</strong> AI algorithms could predict potential issues in web applications
-                before they occur, allowing for proactive maintenance.
-              </li>
-              <li>
-                <strong>Natural Language Interfaces:</strong> Users might interact with websites using natural language,
-                with AI interpreting and executing their requests.
-              </li>
-            </ol>
-            <p>
-              While the potential of AI in web development is exciting, it&lsquo;s important to consider the ethical implications
-              and ensure that these technologies are used responsibly and inclusively.
-            </p>
-          </motion.div>
-
-          <motion.div variants={itemVariants} className="mt-12">
-            <h3 className="text-2xl font-bold mb-4">Share this article</h3>
-            <div className="flex gap-4">
-              <Button variant="outline" size="icon">
-                <Facebook className="w-4 h-4" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Twitter className="w-4 h-4" />
-              </Button>
-              <Button variant="outline" size="icon">
-                <Linkedin className="w-4 h-4" />
-              </Button>
-            </div>
-          </motion.div>
-        </motion.article>
-
-        <motion.section variants={itemVariants} className="max-w-4xl mx-auto">
-          <h3 className="text-2xl font-bold mb-6">Related Articles</h3>
-          <div className="grid gap-6 md:grid-cols-2">
-            {[1, 2].map((post) => (
-              <motion.div key={post} variants={itemVariants}>
-                <Card>
-                  <CardContent className="p-4">
-                    <img
-                      src={`/placeholder.svg?height=200&width=400`}
-                      alt={`Related post ${post}`}
-                      className="w-full h-40 object-cover rounded-md mb-4"
-                    />
-                    <h4 className="text-xl font-semibold mb-2">Related Article Title</h4>
-                    <p className="text-muted-foreground mb-4">
-                      A brief description of the related article to entice readers to click and read more...
-                    </p>
-                    <Link
-                      href={`/blog/related-post-${post}`}
-                      className="text-primary hover:underline inline-flex items-center"
-                    >
-                      Read More
-                      <ArrowLeft className="w-4 h-4 ml-2" />
-                    </Link>
-                  </CardContent>
-                </Card>
-              </motion.div>
             ))}
-          </div>
-        </motion.section>
+          </motion.div>
+        </motion.div>
+        <motion.div
+          className="absolute bottom-8 left-1/2 transform -translate-x-1/2"
+          animate={{ y: [0, 10, 0] }}
+          transition={{ repeat: Infinity, duration: 1.5 }}
+        >
+          <ChevronDown className="w-8 h-8 text-white" />
+        </motion.div>
       </div>
-    </motion.div>
-  )
-}
+
+      <div className="mx-auto px-4 py-12">
+        <div className="container">
+          <article className="prose prose-lg max-w-none">
+            <NotionRenderer blockMap={blocks} mapImageUrl={toNotionImageUrl} />
+          </article>
+
+          <div className="my-20">
+            <div className="flex justify-between items-center mb-8">
+              <h3 className="text-2xl font-bold text-gray-800">
+                Continue Reading
+              </h3>
+              <Link
+                href="/blogs"
+                className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+              >
+                View all →
+              </Link>
+            </div>
+
+            <div className="grid grid-1 md:grid-cols-3 gap-8">
+              {morePosts.map((p) => (
+                <BlogCard key={p?.id} post={p} />
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default BlogDetails;

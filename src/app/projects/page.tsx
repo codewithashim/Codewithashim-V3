@@ -1,4 +1,6 @@
-import Blog from "@/src/features/Blog/Blog";
+import { projectData } from "@/src/constant/data/projectData";
+import Project from "@/src/features/Project/Project";
+import React from "react";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -76,6 +78,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function BlogPage() {
-  return <Blog />;
-}
+const ProjectPage = () => {
+  return (
+    <section className="container mx-auto">
+      <Project projects={projectData} />
+    </section>
+  );
+};
+
+export default ProjectPage;
