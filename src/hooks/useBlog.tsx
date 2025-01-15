@@ -1,59 +1,67 @@
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import { BlogPost, BlogResponse } from '@/src/schema/BlogSchema';
-import { BLOG_BASE_URL } from '../lib/network';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import axios from "axios";
+import { BlockMapType } from "react-notion";
+import { envConfig } from "../config/envConfig";
 
-const POSTS_PER_PAGE = 6;
+// Base URLs for APIs
+const NOTION_API_BASE = envConfig.NOTION_API_BASE_URL;
+const SPLITBEE_API_BASE = envConfig.SPLITBEE_API_BASE_URL;
 
-export function useBlog(currentPage: number) {
-    const [blogPosts, setBlogPosts] = useState<BlogPost[]>([]);
-    const [totalPosts, setTotalPosts] = useState(0);
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState<string | null>(null);
+// Axios instance for Notion API
+const notionAxios = axios.create({
+  baseURL: NOTION_API_BASE,
+});
 
-    useEffect(() => {
-        const fetchPosts = async () => {
-            setLoading(true);
-            try {
-                const response = await axios.post<{ data: BlogResponse }>(BLOG_BASE_URL, {
-                    query: `
-                        query {
-                            user(username: "codewithashim") {
-                                publication {
-                                    posts(page: ${currentPage}, pageSize: ${POSTS_PER_PAGE}) {
-                                        edges {
-                                            node {
-                                                _id
-                                                title
-                                                brief
-                                                slug
-                                                dateAdded
-                                                coverImage
-                                            }
-                                        }
-                                        totalDocuments
-                                    }
-                                }
-                            }
-                        }
-                    `
-                });
+// Fetch a blog table by its ID
+export const getBlogTable = async (blogId: string): Promise<any[]> => {
+  try {
+    const { data } = await notionAxios.get(`/table/${blogId}`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching blog table:", error);
+    throw new Error(`Failed to fetch blog table: ${error}`);
+  }
+};
 
-                const posts = response.data.data.user.publication.posts.edges.map(edge => edge.node);
-                setBlogPosts(posts);
-                setTotalPosts(response.data.data.user.publication.posts.totalDocuments);
-                setError(null);
-                
-            } catch (err) {
-                setError('Error fetching blog posts');
-                console.error('Error fetching blog posts:', err);
-            } finally {
-                setLoading(false);
-            }
-        };
+// Fetch page blocks by its ID
+export const getPageBlocks = async (pageId: string): Promise<BlockMapType> => {
+  try {
+    const { data } = await notionAxios.get(`/page/${pageId}`);
+    return data;
+  } catch (error) {
+    console.error("Error fetching page blocks:", error);
+    throw new Error(`Failed to fetch page blocks: ${error}`);
+  }
+};
 
-        fetchPosts();
-    }, [currentPage]);
+// Axios instance for Splitbee API
+const splitbeeAxios = axios.create({
+  baseURL: SPLITBEE_API_BASE,
+});
 
-    return { blogPosts, totalPosts, loading, error };
-}
+// Fetch page views using the Splitbee API
+export const getPageViews = async (path: string): Promise<number> => {
+  try {
+    const { data } = await splitbeeAxios.get(`/timo.sh`, {
+      params: { path },
+    });
+    return data.count || 0;
+  } catch (error) {
+    console.error("Error fetching page views:", error);
+    return 0; // Return a default value in case of an error
+  }
+};
+
+// Format a date as a readable string
+export const getDateStr = (date: Date | string): string => {
+  try {
+    return new Date(date).toLocaleString("en-US", {
+      month: "long",
+      day: "2-digit",
+      year: "numeric",
+    });
+  } catch (error) {
+    console.error("Error formatting date:", error);
+    return ""; // Return an empty string in case of an error
+  }
+};
