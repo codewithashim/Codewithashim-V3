@@ -9,7 +9,6 @@ import FeaturedBlog from './@components/FeaturedBlog';
 
 const Home = () => {
 
-
   return (
     <section className='home-page'>
       <HeroSection />
