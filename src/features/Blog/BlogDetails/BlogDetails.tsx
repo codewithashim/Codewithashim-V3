@@ -127,23 +127,29 @@ const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
           </article>
 
           <div className="my-20">
-            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-2xl font-bold text-gray-800">
-                Continue Reading
-              </h3>
-              <Link
-                href="/blogs"
-                className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
-              >
-                View all →
-              </Link>
-            </div>
+            {morePosts.length !== 0 && (
+              <div>
+                <hr className="my-6 md:my-8" />
 
-            <div className="grid grid-1 md:grid-cols-3 gap-8">
-              {morePosts.map((p) => (
-                <BlogCard key={p?.id} post={p} />
-              ))}
-            </div>
+                <div className="flex justify-between items-center mb-8">
+                  <h3 className="text-2xl font-bold text-gray-800">
+                    Continue Reading
+                  </h3>
+                  <Link
+                    href="/blogs"
+                    className="text-blue-600 hover:text-blue-800 transition duration-300 ease-in-out"
+                  >
+                    View all →
+                  </Link>
+                </div>
+
+                <div className="grid grid-1 md:grid-cols-3 gap-8">
+                  {morePosts.map((p) => (
+                    <BlogCard key={p?.id} post={p} />
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

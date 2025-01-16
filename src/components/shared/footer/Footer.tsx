@@ -60,7 +60,7 @@ export default function Footer() {
           className="flex flex-wrap justify-center gap-4 text-sm md:text-base"
           variants={itemVariants}
         >
-          {navItems.map((item) => (
+          {navItems.map((item) => 
             <Link
               key={item.href}
               href={item.href}
@@ -68,14 +68,14 @@ export default function Footer() {
             >
               {item.label}
             </Link>
-          ))}
+          )}
         </motion.nav>
 
         <motion.div
           className="flex gap-2"
           variants={itemVariants}
         >
-          {socialLinks.map((social) => (
+          {socialLinks.map((social) => 
             <Button
               key={social.label}
               variant="ghost"
@@ -88,7 +88,7 @@ export default function Footer() {
                 <span className="sr-only">{social.label}</span>
               </Link>
             </Button>
-          ))}
+          )}
         </motion.div>
 
         <motion.p
