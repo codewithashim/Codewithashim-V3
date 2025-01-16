@@ -1,9 +1,9 @@
-'use client'
-import { motion } from 'framer-motion'
-import Link from 'next/link'
-import { Button } from '@/src/components/ui/button'
-import { FileText, Send, ChevronRight } from 'lucide-react'
-import ImageSection from './ImageSection'
+"use client";
+import { motion } from "framer-motion";
+import Link from "next/link";
+import { Button } from "@/src/components/ui/button";
+import { FileText, Send, ChevronRight } from "lucide-react";
+import ImageSection from "./ImageSection";
 
 export default function HeroSection() {
   return (
@@ -34,7 +34,7 @@ export default function HeroSection() {
               className="flex items-center space-x-2"
             >
               <span className="bg-gradient-to-r from-purple-400 via-purple-500 to-purple-600 bg-clip-text text-xl text-transparent md:text-2xl lg:text-3xl">
-                Software Engineer 
+                Software Engineer
               </span>
               <span className="inline-flex animate-bounce">
                 <ChevronRight className="h-6 w-6 text-purple-500" />
@@ -48,7 +48,11 @@ export default function HeroSection() {
             transition={{ delay: 0.4, duration: 0.5 }}
             className="text-muted-foreground/90 max-w-[600px] text-base sm:text-lg lg:text-xl"
           >
-            Experienced Full Stack Engineer with expertise in JavaScript, TypeScript, MongoDB, Express.js, React.js, Next.js, and Node.js. Passionate about building scalable and efficient web applications, committed to staying at the forefront of industry trends and technologies.
+            Experienced Full Stack Engineer with expertise in JavaScript,
+            TypeScript, MongoDB, Express.js, React.js, Next.js, and Node.js.
+            Passionate about building scalable and efficient web applications,
+            committed to staying at the forefront of industry trends and
+            technologies.
           </motion.p>
 
           <motion.div
@@ -69,7 +73,11 @@ export default function HeroSection() {
                 <div className="absolute inset-0 -z-0 bg-gradient-to-r from-purple-600 to-purple-400 opacity-0 transition-opacity duration-300 group-hover:opacity-100" />
               </Button>
             </Link>
-            <Link href="#contact">
+            <Link
+              href="https://wa.me/8801740737445"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button
                 variant="outline"
                 className="group relative overflow-hidden border-purple-500/50 text-purple-500 transition-all hover:border-purple-500 hover:text-purple-600 hover:shadow-lg hover:shadow-purple-500/25"
@@ -94,5 +102,5 @@ export default function HeroSection() {
         <div className="absolute -bottom-1/4 -right-1/4 h-96 w-96 rounded-full bg-blue-500/10 blur-3xl" />
       </div>
     </section>
-  )
+  );
 }

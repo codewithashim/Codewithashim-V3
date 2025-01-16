@@ -30,7 +30,7 @@ export function BlogCard({ post }: BlogCardProps) {
       <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 ">
         <CardHeader className="p-0">
           <div className="relative w-full h-72">
-            <Link href={`/blog/${post?.id}`} >
+            <Link href={`/blog/${post?.id}`}>
               <Image
                 alt={`${post?.title} cover image`}
                 src={
@@ -56,7 +56,7 @@ export function BlogCard({ post }: BlogCardProps) {
             </time>
           </div>
           <CardTitle className="mt-4 text-xl ">
-            {post.title}
+            <Link href={`/blog/${post?.id}`}>{post.title}</Link>
           </CardTitle>
           <CardDescription className="mt-2 line-clamp-2 text-gray-600">
             {post.sub_title}
