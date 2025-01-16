@@ -43,9 +43,9 @@ export default function Header() {
   ];
 
   return (
-    <header className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50">
+    <header className="fixed bottom-1 md:bottom-4 left-1/2 -translate-x-1/2 z-50">
       <motion.nav
-        className="h-16 px-2 bg-gradient-to-r from-purple-400 to-purple-600 rounded-[10px] border shadow-lg flex items-center gap-1 backdrop-blur-md"
+        className="h-16 px-2 bg-gradient-to-r from-purple-400 to-purple-600 rounded-bl-[14px] rounded-br-[14px] md:rounded-[10px] border shadow-lg flex items-center gap-1 backdrop-blur-md"
         initial={{ y: 50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -61,7 +61,7 @@ export default function Header() {
               variant={isActive(item.href) ? "secondary" : "ghost"}
               size="icon"
               asChild
-              className={`w-12 h-12 relative ${
+              className={`w-10 h-10 md:w-12 md:h-12 relative ${
                 isActive(item.href)
                   ? "bg-white/20 text-white"
                   : "text-white/80 hover:text-purple-600"
@@ -96,7 +96,7 @@ export default function Header() {
               variant="ghost"
               size="icon"
               asChild
-              className="w-12 h-12 text-white/80  hover:text-purple-600"
+              className="w-10 h-10 md:w-12 md:h-12 text-white/80  hover:text-purple-600"
             >
               <Link
                 href={item.href}

@@ -72,7 +72,7 @@ export default function Footer() {
         </motion.nav>
 
         <motion.div
-          className="flex gap-4"
+          className="flex gap-2"
           variants={itemVariants}
         >
           {socialLinks.map((social) => (
