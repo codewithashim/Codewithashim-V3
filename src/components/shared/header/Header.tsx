@@ -50,7 +50,7 @@ export default function Header() {
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.5 }}
       >
-        {menuItems.map((item) => (
+        {menuItems.map((item) => 
           <motion.div
             key={item.href}
             onHoverStart={() => setHoveredItem(item.href)}
@@ -69,7 +69,7 @@ export default function Header() {
             >
               <Link href={item.href} aria-label={item.label}>
                 <item.icon className="h-5 w-5" />
-                {hoveredItem === item.href && (
+                {hoveredItem === item.href && 
                   <motion.span
                     className="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-purple-600 text-xs font-medium px-2 py-1 rounded-md shadow-lg"
                     initial={{ opacity: 0, y: 10 }}
@@ -77,15 +77,15 @@ export default function Header() {
                   >
                     {item.label}
                   </motion.span>
-                )}
+                }
               </Link>
             </Button>
           </motion.div>
-        ))}
+        )}
 
         <div className="w-px h-8 bg-white/20 mx-1" />
 
-        {socialItems.map((item) => (
+        {socialItems.map((item) => 
           <motion.div
             key={item.href}
             whileHover={{ scale: 1.2 }}
@@ -105,7 +105,7 @@ export default function Header() {
                 aria-label={item.label}
               >
                 <item.icon className="h-5 w-5" />
-                {hoveredItem === item.href && (
+                {hoveredItem === item.href && 
                   <motion.span
                     className="absolute -top-8 left-1/2 -translate-x-1/2 bg-white text-purple-600 text-xs font-medium px-2 py-1 rounded-md shadow-lg"
                     initial={{ opacity: 0, y: 10 }}
@@ -113,11 +113,11 @@ export default function Header() {
                   >
                     {item.label}
                   </motion.span>
-                )}
+                }
               </Link>
             </Button>
           </motion.div>
-        ))}
+        )}
       </motion.nav>
     </header>
   );

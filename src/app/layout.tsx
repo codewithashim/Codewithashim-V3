@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import "@/src/styles/globals.scss";
+import "@/src/styles/prism.scss";
+import "@/src/styles/notion.scss";
 import SchemaOrg from "./SchemaOrg";
 import AnimationWrapper from "../components/shared/AnimationWrapper";
 import Header from "../components/shared/header/Header";

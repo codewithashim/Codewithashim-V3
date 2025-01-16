@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { getBlogTable as fetchBlogTable } from "@/src/hooks/useBlog";
 import { motion } from "framer-motion";
 import { BlogCard } from "./@components/BlogCard";
-import SearchBar from "./@components/SearchBar";
 import {
   Pagination,
   PaginationContent,
@@ -85,80 +84,80 @@ const Blog = () => {
 
   return (
     <section>
-      <BlogHero />
+      <BlogHero handleSearch={handleSearch} />
       <motion.section
-        className="container mx-auto px-4 py-12"
+        className=" mx-auto py-12"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
-        <motion.div variants={itemVariants} className="my-12">
-          <SearchBar onSearch={handleSearch} />
-        </motion.div>
-
-        {loading ? (
-          <BlogSkeleton />
-        ) : (
-          <motion.div
-            variants={containerVariants}
-            className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
-          >
-            {filteredBlogs
-              .slice(
-                (currentPage - 1) * postsPerPage,
-                currentPage * postsPerPage
-              )
-              .map((blog) => (
-                <motion.div key={blog.id} variants={itemVariants}>
-                  <BlogCard post={blog} />
-                </motion.div>
-              ))}
-          </motion.div>
-        )}
-
-        {!loading && filteredBlogs.length > postsPerPage && (
-          <motion.div
-            variants={itemVariants}
-            className="flex justify-center mt-8"
-          >
-            <Pagination>
-              <PaginationContent>
-                <PaginationItem>
-                  <PaginationPrevious
-                    onClick={() =>
-                      handlePageChange(Math.max(1, currentPage - 1))
-                    }
-                    className={
-                      currentPage === 1 ? "pointer-events-none opacity-50" : ""
-                    }
-                  />
-                </PaginationItem>
-                {[...Array(totalPages)].map((_, index) => (
-                  <PaginationItem key={index}>
-                    <PaginationLink
-                      onClick={() => handlePageChange(index + 1)}
-                      isActive={currentPage === index + 1}
-                    >
-                      {index + 1}
-                    </PaginationLink>
-                  </PaginationItem>
+        <div className="container">
+          {loading ? (
+            <BlogSkeleton />
+          ) : (
+            <motion.div
+              variants={containerVariants}
+              className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
+            >
+              {filteredBlogs
+                .slice(
+                  (currentPage - 1) * postsPerPage,
+                  currentPage * postsPerPage
+                )
+                .map((blog) => (
+                  <motion.div key={blog.id} variants={itemVariants}>
+                    <BlogCard post={blog} />
+                  </motion.div>
                 ))}
-                <PaginationItem>
-                  <PaginationNext
-                    onClick={() =>
-                      handlePageChange(Math.min(totalPages, currentPage + 1))
-                    }
-                    className={
-                      currentPage === totalPages
-                        ? "pointer-events-none opacity-50"
-                        : ""
-                    }
-                  />
-                </PaginationItem>
-              </PaginationContent>
-            </Pagination>
-          </motion.div>
-        )}
+            </motion.div>
+          )}
+
+          {!loading && filteredBlogs.length > postsPerPage && (
+            <motion.div
+              variants={itemVariants}
+              className="flex justify-center mt-8"
+            >
+              <Pagination>
+                <PaginationContent>
+                  <PaginationItem>
+                    <PaginationPrevious
+                      onClick={() =>
+                        handlePageChange(Math.max(1, currentPage - 1))
+                      }
+                      className={
+                        currentPage === 1
+                          ? "pointer-events-none opacity-50"
+                          : ""
+                      }
+                    />
+                  </PaginationItem>
+                  {[...Array(totalPages)].map((_, index) => (
+                    <PaginationItem key={index}>
+                      <PaginationLink
+                        onClick={() => handlePageChange(index + 1)}
+                        isActive={currentPage === index + 1}
+                      >
+                        {index + 1}
+                      </PaginationLink>
+                    </PaginationItem>
+                  ))}
+                  <PaginationItem>
+                    <PaginationNext
+                      onClick={() =>
+                        handlePageChange(Math.min(totalPages, currentPage + 1))
+                      }
+                      className={
+                        currentPage === totalPages
+                          ? "pointer-events-none opacity-50"
+                          : ""
+                      }
+                    />
+                  </PaginationItem>
+                </PaginationContent>
+              </Pagination>
+            </motion.div>
+          )}
+        </div>
       </motion.section>
     </section>
   );
