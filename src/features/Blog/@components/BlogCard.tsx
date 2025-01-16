@@ -27,7 +27,7 @@ export function BlogCard({ post }: BlogCardProps) {
         visible: { y: 0, opacity: 1 },
       }}
     >
-      <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 border-purple-200">
+      <Card className="overflow-hidden transition-all hover:shadow-lg hover:-translate-y-1 ">
         <CardHeader className="p-0">
           <div className="relative w-full h-72">
             <Link href={`/blog/${post?.id}`} >
@@ -46,7 +46,7 @@ export function BlogCard({ post }: BlogCardProps) {
           </div>
         </CardHeader>
         <CardContent className="p-6">
-          <div className="flex items-center gap-4 text-sm text-purple-600">
+          <div className="flex items-center gap-4 text-sm ">
             <time
               className="flex items-center gap-1"
               dateTime={post.publish_date}
@@ -55,7 +55,7 @@ export function BlogCard({ post }: BlogCardProps) {
               {new Date(post.publish_date).toLocaleDateString()}
             </time>
           </div>
-          <CardTitle className="mt-4 text-xl text-purple-800">
+          <CardTitle className="mt-4 text-xl ">
             {post.title}
           </CardTitle>
           <CardDescription className="mt-2 line-clamp-2 text-gray-600">
@@ -64,7 +64,7 @@ export function BlogCard({ post }: BlogCardProps) {
         </CardContent>
         <CardFooter className="p-6 pt-0">
           <Link
-            className="inline-flex items-center text-sm font-medium text-purple-600 hover:text-purple-700 hover:underline"
+            className="inline-flex items-center text-sm font-medium  hover:text-purple-700 hover:underline"
             href={`/blog/${post?.id}`}
             rel="noopener noreferrer"
           >
