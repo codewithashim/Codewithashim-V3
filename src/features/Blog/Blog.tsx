@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { getBlogTable as fetchBlogTable } from "@/src/hooks/useBlog";
 import { motion } from "framer-motion";
 import { BlogCard } from "./@components/BlogCard";
 import {
@@ -15,10 +14,10 @@ import { BlogPostType } from "@/src/types/blogType";
 import BlogHero from "./@components/BlogHero";
 import BlogSkeleton from "./@components/BlogSkeleton";
 import { envConfig } from "@/src/config/envConfig";
+import useNotion from "@/src/hooks/useNotion";
 
 const Blog = () => {
-  const [blogsData, setBlogsData] = useState<BlogPostType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { blogData, fetchBlogTable } = useNotion();
   const [currentPage, setCurrentPage] = useState(1);
   const [searchQuery, setSearchQuery] = useState("");
   const [filteredBlogs, setFilteredBlogs] = useState<BlogPostType[]>([]);
@@ -26,32 +25,23 @@ const Blog = () => {
   const postsPerPage = 6;
 
   useEffect(() => {
-    const fetchBlogData = async () => {
-      try {
-        const blogs = await fetchBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
-        setBlogsData(blogs);
-        setFilteredBlogs(blogs);
-      } catch (err) {
-        console.error("Error fetching blog table:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBlogData();
+    fetchBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
   }, []);
 
   useEffect(() => {
-    if (searchQuery) {
-      const filtered = blogsData.filter(
-        (blog) =>
-          blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          blog.sub_title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredBlogs(filtered);
-    } else {
-      setFilteredBlogs(blogsData);
+    if (blogData?.data) {
+      if (searchQuery) {
+        const filtered = blogData.data.filter(
+          (blog: BlogPostType) =>
+            blog.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            blog.sub_title.toLowerCase().includes(searchQuery.toLowerCase())
+        );
+        setFilteredBlogs(filtered);
+      } else {
+        setFilteredBlogs(blogData.data);
+      }
     }
-  }, [searchQuery, blogsData]);
+  }, [searchQuery, blogData.data]);
 
   const totalPages = Math.ceil(filteredBlogs.length / postsPerPage);
 
@@ -86,13 +76,13 @@ const Blog = () => {
     <section>
       <BlogHero handleSearch={handleSearch} />
       <motion.section
-        className=" mx-auto py-12"
+        className="mx-auto py-12"
         initial="hidden"
         animate="visible"
         variants={containerVariants}
       >
         <div className="container">
-          {loading ? (
+          {blogData.loading ? (
             <BlogSkeleton />
           ) : (
             <motion.div
@@ -104,7 +94,7 @@ const Blog = () => {
                   (currentPage - 1) * postsPerPage,
                   currentPage * postsPerPage
                 )
-                .map((blog) => (
+                .map((blog: BlogPostType) => (
                   <motion.div key={blog.id} variants={itemVariants}>
                     <BlogCard post={blog} />
                   </motion.div>
@@ -112,7 +102,7 @@ const Blog = () => {
             </motion.div>
           )}
 
-          {!loading && filteredBlogs.length > postsPerPage && (
+          {!blogData.loading && filteredBlogs.length > postsPerPage && (
             <motion.div
               variants={itemVariants}
               className="flex justify-center mt-8"

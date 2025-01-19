@@ -7,7 +7,7 @@ import ImageSection from "./ImageSection";
 
 export default function HeroSection() {
   return (
-    <section className="relative w-full overflow-hidden  py-20">
+    <section className="relative w-full overflow-hidden  py-20" id="about">
       <div className="container relative z-10 mx-auto grid gap-12 px-4 md:grid-cols-2 md:items-center lg:gap-20">
         <motion.div
           initial={{ opacity: 0, x: -20 }}
@@ -61,7 +61,11 @@ export default function HeroSection() {
             transition={{ delay: 0.5, duration: 0.5 }}
             className="flex flex-wrap gap-4"
           >
-            <Link href="/resume">
+            <Link
+              href="https://drive.google.com/file/d/1tL1gR4Ny_IzYVsvMKdplS_IuO7vKMKHG/view"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <Button
                 className="group relative overflow-hidden bg-purple-600 text-white transition-all hover:bg-purple-700 hover:shadow-lg hover:shadow-purple-500/25"
                 size="lg"
