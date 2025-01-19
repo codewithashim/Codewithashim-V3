@@ -1,21 +1,21 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { NotionRenderer, BlockMapType } from "react-notion";
+import React, { useEffect } from "react";
+import { NotionRenderer } from "react-notion";
 import Link from "next/link";
 import Image from "next/image";
-import { getPageBlocks, getPageViews } from "@/src/hooks/useBlog";
 import { toNotionImageUrl } from "@/src/utils/notion";
 import { dateFormatter } from "@/src/utils/helper";
 import { BlogCard } from "../@components/BlogCard";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { Eye, Calendar, Tag, ChevronDown } from "lucide-react";
 import BlogSkeleton from "../@components/BlogSkeleton";
+import useNotion from "@/src/hooks/useNotion";
 
 interface BlogDetailsProps {
   blogId: string;
   post: {
+    id: string;
     title: string;
     date: string;
     slug: string;
@@ -26,33 +26,31 @@ interface BlogDetailsProps {
 }
 
 const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
-  const [blocks, setBlocks] = useState<BlockMapType | null>(null);
-  const [postViewCount, setPostViewCount] = useState<number | null>(null);
+ 
+  const { pageBlocks, pageViews, fetchPageBlocks, fetchPageViews } =
+    useNotion();
   const { scrollY } = useScroll();
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
   const scale = useTransform(scrollY, [0, 300], [1, 0.8]);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const fetchedBlocks = await getPageBlocks(blogId);
-        setBlocks(fetchedBlocks);
+    fetchPageBlocks(blogId);
+    fetchPageViews(`/${post.id}`);
+  }, [blogId, post?.id]);
 
-        const views = await getPageViews(`/${post.slug}`);
-        setPostViewCount(views);
-      } catch (error) {
-        console.error("Error fetching blog details:", error);
-      }
-    };
+ 
 
-    fetchData();
-  }, [blogId, post.slug]);
-
-  if (!blocks) {
+  if (pageBlocks.loading) {
     return (
       <div className="min-h-screen container my-auto bg-gradient-to-b from-gray-50 to-white">
         <BlogSkeleton />
       </div>
+    );
+  }
+
+  if (!pageBlocks.data) {
+    return (
+      <div className="text-center py-20">Failed to load blog content.</div>
     );
   }
 
@@ -91,7 +89,7 @@ const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
             </span>
             <span className="flex items-center bg-white/20 rounded-full px-3 py-1">
               <Eye className="w-4 h-4 mr-2" />
-              {postViewCount || "..."} Views
+              {pageViews.data || "..."} Views
             </span>
           </motion.div>
           <motion.div
@@ -123,7 +121,10 @@ const BlogDetails = ({ blogId, post, morePosts }: BlogDetailsProps) => {
       <div className="mx-auto px-4 py-12">
         <div className="container">
           <article className="prose prose-lg max-w-none">
-            <NotionRenderer blockMap={blocks} mapImageUrl={toNotionImageUrl} />
+            <NotionRenderer
+              blockMap={pageBlocks?.data}
+              mapImageUrl={toNotionImageUrl}
+            />
           </article>
 
           <div className="my-20">

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BlogCard } from "../../Blog/@components/BlogCard";
 import { BlogPostType } from "@/src/types/blogType";
-import { envConfig } from "@/src/config/envConfig";
-import { getBlogTable as fetchBlogTable } from "@/src/hooks/useBlog";
 import BlogSkeleton from "../../Blog/@components/BlogSkeleton";
 import { motion } from "framer-motion";
+import useNotion from "@/src/hooks/useNotion";
+import { envConfig } from "@/src/config/envConfig";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -16,22 +16,19 @@ const containerVariants = {
   },
 };
 
+const itemVariants = {
+  hidden: { y: 20, opacity: 0 },
+  visible: {
+    y: 0,
+    opacity: 1,
+  },
+};
+
 const FeaturedPosts: React.FC = () => {
-  const [blogsData, setBlogsData] = useState<BlogPostType[]>([]);
-  const [loading, setLoading] = useState(true);
+  const { blogData, fetchBlogTable } = useNotion();
 
   useEffect(() => {
-    const fetchBlogData = async () => {
-      try {
-        const blogs = await fetchBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
-        setBlogsData(blogs);
-      } catch (err) {
-        console.error("Error fetching blog table:", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchBlogData();
+    fetchBlogTable(envConfig.NOTION_BLOG_TABLE_ID!);
   }, []);
 
   return (
@@ -41,15 +38,19 @@ const FeaturedPosts: React.FC = () => {
           Featured Posts
         </h2>
 
-        {loading ? (
+        {blogData.loading ? (
           <BlogSkeleton />
         ) : (
           <motion.div
             variants={containerVariants}
+            initial="hidden"
+            animate="visible"
             className="grid gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-            {blogsData.slice(0, 3).map((blog) => (
-              <BlogCard key={blog.id} post={blog} />
+            {blogData.data?.slice(0, 3).map((blog: BlogPostType) => (
+              <motion.div key={blog.id} variants={itemVariants}>
+                <BlogCard post={blog} />
+              </motion.div>
             ))}
           </motion.div>
         )}

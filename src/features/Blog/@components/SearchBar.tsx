@@ -43,7 +43,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialQuery = '' }) =>
   return (
     <div className="relative flex items-center w-full max-w-2xl mx-auto">
       <Input
-        className="pr-20 rounded-full border-2 border-blue-500 focus:border-purple-500 focus:ring focus:ring-purple-300 focus:ring-opacity-50 transition-all duration-300 bg-gray-900 bg-opacity-50 text-white placeholder-gray-400"
+        className="pr-20 rounded-full border-2 border-blue-500 focus:border-purple-500 focus:ring focus:ring-purple-300 focus:ring-opacity-50 transition-all duration-300 bg-white text-gray-800 placeholder-gray-500"
         placeholder="Search for cutting-edge articles..."
         type="search"
         value={searchQuery}
@@ -52,7 +52,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialQuery = '' }) =>
       />
       {searchQuery && (
         <Button
-          className="absolute right-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-400 hover:text-white transition-colors duration-300"
+          className="absolute right-12 top-1/2 -translate-y-1/2 rounded-full p-1 text-gray-500 hover:text-gray-700 transition-colors duration-300"
           size="icon"
           variant="ghost"
           onClick={handleClearSearch}
@@ -61,7 +61,7 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialQuery = '' }) =>
         </Button>
       )}
       <Button
-        className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 text-white hover:from-blue-600 hover:to-purple-700 focus:ring focus:ring-purple-300 focus:ring-opacity-50 transition-all duration-300"
+        className="absolute right-0 top-1/2 -translate-y-1/2 rounded-full bg-blue-600 text-white hover:bg-blue-700 focus:ring focus:ring-blue-300 focus:ring-opacity-50 transition-all duration-300"
         size="icon"
         onClick={handleSearch}
       >
@@ -73,4 +73,3 @@ const SearchBar: React.FC<SearchBarProps> = ({ onSearch, initialQuery = '' }) =>
 }
 
 export default SearchBar
-

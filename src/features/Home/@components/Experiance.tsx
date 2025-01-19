@@ -57,6 +57,7 @@ function ExperienceCard({
       initial={{ opacity: 0, y: 50 }}
       animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
       transition={{ duration: 0.5, delay: index * 0.1 }}
+      id="experience"
     >
       <Card className="relative overflow-hidden">
         <motion.div

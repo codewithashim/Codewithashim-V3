@@ -1,9 +1,16 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    images: {
-        domains: ['picsum.photos', 'res.cloudinary.com', "www.notion.so"],
-        
-      },
+  images: {
+    domains: [
+      "www.notion.so",
+      "notion.so",
+      "images.unsplash.com",
+      "pbs.twimg.com",
+      "picsum.photos",
+      "res.cloudinary.com",
+    ],
+    formats: ["image/avif", "image/webp"],
+  },
 };
 
 export default nextConfig;
