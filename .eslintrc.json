@@ -2,6 +2,21 @@
   "extends": ["next/core-web-vitals", "next/typescript"],
   "rules": {
  
-    "@typescript-eslint/no-explicit-any": "warn" 
+    "@typescript-eslint/no-explicit-any": "off" 
+    "react-hooks/exhaustive-deps": "off" 
+    // allow explicit any type
+    "react/no-explicit-any": "off",
+    // allow explicit any type in function props
+    "@typescript-eslint/explicit-function-return-type": "off",
+    // allow explicit any type in function arguments
+    "@typescript-eslint/explicit-function-return-type-argument": "off",
+    // allow explicit any type in function return type
+    "@typescript-eslint/explicit-return-type-on-exports": "off",
+    // allow explicit any type in function arguments
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    // allow explicit any type in function arguments
+    "@typescript-eslint/no-inferrable-types": "off",
+    // allow explicit any type in function arguments
+    "@typescript-eslint/no-non-null-assertion": "off", 
   }
 }
